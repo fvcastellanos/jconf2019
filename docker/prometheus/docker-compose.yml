@@ -1,0 +1,12 @@
+version: "3"
+services:
+  prometheus:
+    image: prom/prometheus:v2.13.0
+    container_name: prometheus
+    ports:
+      - 9090:9090
+    volumes: 
+      - "$PROMETHEUS_DATA:/prometheus rw"
+      - "$PROMETHEUS_CONFIG:/etc/prometheus/prometheus.yml"
+    extra_hosts: 
+      - supper-app-host:$APP_HOST
