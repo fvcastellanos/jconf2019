@@ -35,7 +35,7 @@ definitions:
     properties:
       url:
         type: string
-        example: "https://cavitos.net"
+        example: "https://google.com"
 
 paths:
   /examples:
