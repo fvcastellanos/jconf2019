@@ -32,10 +32,14 @@ definitions:
     title: Web Capture Request body
     required:
       - url
+      - requestId
     properties:
       url:
         type: string
         example: "https://google.com"
+      requestId:
+        type: string
+        example: "2c5ea4c0-4067-11e9-8bad-9b1deb4d3b7d"
 
 paths:
   /examples:
@@ -96,6 +100,14 @@ paths:
           required: true
           schema: 
             $ref: "#/definitions/CaptureBody"
+        - name: requestId
+          in: body
+          description: Request identifier
+          required: true
+          schema: 
+            $ref: "#/definitions/CaptureBody"
       responses:
         200:
-          description: Returns all examples
+          description: Success capture of URL
+        422:
+          description: URL cannot be captured

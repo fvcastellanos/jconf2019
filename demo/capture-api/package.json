@@ -12,13 +12,15 @@
     "test:debug": "mocha --inspect-brk test/**/*.ts --exit"
   },
   "dependencies": {
+    "aws-sdk": "^2.556.0",
     "body-parser": "^1.19.0",
     "cookie-parser": "^1.4.4",
     "dotenv": "^8.1.0",
     "express": "^4.17.1",
     "pino": "^5.13.4",
     "puppeteer": "^2.0.0",
-    "swagger-express-middleware": "^2.0.3"
+    "swagger-express-middleware": "^2.0.3",
+    "uuid": "^3.3.3"
   },
   "devDependencies": {
     "@types/chai": "^4.2.3",

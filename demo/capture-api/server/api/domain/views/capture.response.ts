@@ -1,7 +1,7 @@
+import { BaseResponse } from "./base.response";
 
-export class CaptureResponse {
+export class CaptureResponse extends BaseResponse {
 
-    requestId: string;
     targetUrl: string;
     storedPath: string;
 }
