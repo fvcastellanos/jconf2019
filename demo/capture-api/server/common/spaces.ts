@@ -5,6 +5,7 @@ export class Spaces {
     readonly secret: string;
     readonly baseDirectory: string;
     readonly bucket: string;
+    readonly spacesEndpoint: string;
 
     constructor() {
 
@@ -12,6 +13,7 @@ export class Spaces {
         this.secret = process.env.AWS_SECRET_ACCESS_KEY;
         this.bucket = process.env.SPACES_BUCKET;
         this.baseDirectory = process.env.SPACES_BASE_PATH;
+        this.spacesEndpoint = process.env.SPACES_ENDPOINT;
     }    
 }
 

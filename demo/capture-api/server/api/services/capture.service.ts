@@ -13,15 +13,25 @@ export class CaptureService {
 
     async captureUrl(url: string) : Promise<string> {
 
-        let puppeteerOptions = { ignoreHTTPSErrors: true };
+        let puppeteerOptions = { 
+            ignoreHTTPSErrors: true,
+            executablePath: '/usr/bin/chromium-browser',
+            args: [
+                // Required for Docker version of Puppeteer
+                // '--no-sandbox',
+                // '--disable-setuid-sandbox',
+                // This will write shared memory files into /tmp instead of /dev/shm,
+                // because Docker’s default for /dev/shm is 64MB
+                '--disable-dev-shm-usage'
+            ]            
+        };
+        
         let targetUrl = "";
 
         await puppeteer.launch(puppeteerOptions).then(async browser => {
     
             logger.info(`staring to capture url=${url}`)
             const page = await browser.newPage();
-
-            // page.on('load', () => logger.info(`url=${url} was loaded`));
 
             await page.setViewport({
                 width: 1280,

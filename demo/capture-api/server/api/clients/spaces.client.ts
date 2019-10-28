@@ -16,7 +16,7 @@ export class SpacesClient {
 
         logger.info(`loading spaces configuration`);        
 
-        const spacesEndpoint = new AWS.Endpoint('sfo2.digitaloceanspaces.com');
+        const spacesEndpoint = new AWS.Endpoint(this.spacesConfig.spacesEndpoint);
 
         const s3 = new AWS.S3({
           endpoint: spacesEndpoint.href,
