@@ -15,11 +15,11 @@ export class CaptureService {
 
         let puppeteerOptions = { 
             ignoreHTTPSErrors: true,
-            executablePath: '/usr/bin/chromium-browser',
+            executablePath: 'google-chrome-unstable',
             args: [
                 // Required for Docker version of Puppeteer
-                // '--no-sandbox',
-                // '--disable-setuid-sandbox',
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
                 // This will write shared memory files into /tmp instead of /dev/shm,
                 // because Docker’s default for /dev/shm is 64MB
                 '--disable-dev-shm-usage'
@@ -60,7 +60,7 @@ export class CaptureService {
 
                             }).catch(error => {
 
-                                logger.error(`can't upload generated image from url=${url}`);
+                                logger.error(`can't upload generated image from url=${url}, error=${error}`);
                                 throw new Error(`can't upload generated image from url=${url}`);
 
                             });                            

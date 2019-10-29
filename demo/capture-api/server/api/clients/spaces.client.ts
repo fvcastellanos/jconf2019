@@ -16,7 +16,11 @@ export class SpacesClient {
 
         logger.info(`loading spaces configuration`);        
 
+        logger.info(`spaces_config=${this.spacesConfig.spacesEndpoint}, ${this.spacesConfig.baseDirectory}, ${this.spacesConfig.bucket}`);
+
         const spacesEndpoint = new AWS.Endpoint(this.spacesConfig.spacesEndpoint);
+
+
 
         const s3 = new AWS.S3({
           endpoint: spacesEndpoint.href,
@@ -41,9 +45,9 @@ export class SpacesClient {
 
                 logger.info(`object=${objectParams.Key} uploaded`);
                 
-            }).catch(() => {
+            }).catch(error => {
 
-                logger.error(`can't upload object=${objectParams}`);
+                logger.error(`can't upload object=${objectParams}, error=${error}`);
                 
                 throw new Error(`can't upload object: ${objectParams}`);
             });
