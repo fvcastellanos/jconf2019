@@ -13,18 +13,11 @@ export class CaptureService {
 
     async captureUrl(url: string) : Promise<string> {
 
-        let puppeteerOptions = { 
-            ignoreHTTPSErrors: true,
-            executablePath: 'google-chrome-unstable',
-            args: [
-                // Required for Docker version of Puppeteer
-                '--no-sandbox',
-                '--disable-setuid-sandbox',
-                // This will write shared memory files into /tmp instead of /dev/shm,
-                // because Docker’s default for /dev/shm is 64MB
-                '--disable-dev-shm-usage'
-            ]            
-        };
+        let puppeteerOptions = null;
+
+        await this.buildPuppeteerOptions().then(value => {
+            puppeteerOptions = value;
+        })
         
         let targetUrl = "";
 
@@ -86,4 +79,36 @@ export class CaptureService {
 
         return targetUrl;
     }
+
+    private async buildPuppeteerOptions(): Promise<object> {
+
+        let environment = process.env.NODE_ENV;
+        logger.info(`using configuration for environment=${environment}`);
+
+        if (environment == 'prod') {
+
+            return {
+                ignoreHTTPSErrors: true,
+                executablePath: 'google-chrome-unstable',
+                args: [
+                    // Required for Docker version of Puppeteer
+                    '--no-sandbox',
+                    '--disable-setuid-sandbox',
+                    // This will write shared memory files into /tmp instead of /dev/shm,
+                    // because Docker’s default for /dev/shm is 64MB
+                    '--disable-dev-shm-usage'
+                ]            
+            };
+        }
+
+        return {
+            ignoreHTTPSErrors: true,
+            args: [
+                // This will write shared memory files into /tmp instead of /dev/shm,
+                // because Docker’s default for /dev/shm is 64MB
+                '--disable-dev-shm-usage'
+            ]            
+        }
+    }
+
 }
