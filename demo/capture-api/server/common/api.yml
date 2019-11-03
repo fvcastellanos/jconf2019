@@ -15,17 +15,7 @@ consumes:
 produces:
   - application/json
 
-
 definitions:
-  ExampleBody:
-    type: object
-    title: example
-    required:
-      - name
-    properties:
-      name:
-        type: string
-        example: no_stress
   
   CaptureBody:
     type: object
@@ -42,44 +32,6 @@ definitions:
         example: "2c5ea4c0-4067-11e9-8bad-9b1deb4d3b7d"
 
 paths:
-  /examples:
-    get:
-      tags:
-        - Examples
-      description: Fetch all examples
-      responses:
-        200:
-          description: Returns all examples
-    post:
-      tags:
-        - Examples
-      description: Create a new example
-      parameters:
-        - name: example
-          in: body
-          description: an example
-          required: true
-          schema: 
-            $ref: "#/definitions/ExampleBody"
-      responses:
-        200:
-          description: Returns all examples
-
-  /examples/{id}:
-    get:
-      tags:
-        - Examples
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: The id of the example to retrieve
-          type: integer
-      responses:
-        200:
-          description: Return the example with the specified id
-        404:
-          description: Example not found
 
   /spec:
     get:
@@ -88,6 +40,14 @@ paths:
       responses:
         200:
           description: Return the API specification
+
+  /metrics:
+    get:
+      tags:
+        - Metrics
+      responses:
+        200:
+          description: Prometheus metrics
 
   /:
     post:

@@ -1,6 +1,13 @@
 import AWS from 'aws-sdk';
 import { Spaces } from '../../common/spaces';
 import logger from '../../common/logger'
+import metricsClient from '../../common/metrics';
+
+const uploadGauge = new metricsClient.Gauge({
+    name: "capture_api_upload_gauge",
+    help: "image upload stats",
+    labelNames: ["status"]
+});
 
 export class SpacesClient {
 
@@ -12,15 +19,14 @@ export class SpacesClient {
 
     async uploadContent(buffer: Buffer) : Promise<string> {
 
+        let end = uploadGauge.startTimer();
+
         const uuidv1 = require('uuid/v1');
 
         logger.info(`loading spaces configuration`);        
-
         logger.info(`spaces_config=${this.spacesConfig.spacesEndpoint}, ${this.spacesConfig.baseDirectory}, ${this.spacesConfig.bucket}`);
 
         const spacesEndpoint = new AWS.Endpoint(this.spacesConfig.spacesEndpoint);
-
-
 
         const s3 = new AWS.S3({
           endpoint: spacesEndpoint.href,
@@ -43,12 +49,13 @@ export class SpacesClient {
         await s3.putObject(objectParams).promise()
             .then(async () => {
 
+                end({ status: "success" });
                 logger.info(`object=${objectParams.Key} uploaded`);
                 
             }).catch(error => {
 
-                logger.error(`can't upload object=${objectParams}, error=${error}`);
-                
+                end({ status: "failure" });
+                logger.error(`can't upload object=${objectParams}, error=${error}`);                
                 throw new Error(`can't upload object: ${objectParams}`);
             });
      

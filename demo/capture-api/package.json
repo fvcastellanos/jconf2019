@@ -18,6 +18,7 @@
     "dotenv": "^8.1.0",
     "express": "^4.17.1",
     "pino": "^5.13.4",
+    "prom-client": "^11.5.3",
     "puppeteer": "^1.19.0",
     "swagger-express-middleware": "^2.0.3",
     "uuid": "^3.3.3"

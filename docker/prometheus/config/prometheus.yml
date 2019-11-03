@@ -24,3 +24,15 @@ scrape_configs:
     scrape_interval: 5s
     static_configs:
     - targets: ['supper-app-host:8080']
+
+  - job_name: 'wcapture-actuator'
+    metrics_path: '/wcapture/actuator/prometheus'
+    scrape_interval: 5s
+    static_configs:
+    - targets: ['192.168.99.1:8080']
+
+  - job_name: 'capture-api'
+    metrics_path: '/capture/v1/metrics'
+    scrape_interval: 5s
+    static_configs:
+    - targets: ['192.168.99.1:9080']
