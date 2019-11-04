@@ -39,7 +39,7 @@ export class CaptureService {
                 deviceScaleFactor: 1
             });
 
-            await page.goto(url).then(async response => {
+            await page.goto(url, { waitUntil: 'load', timeout: 60000 }).then(async response => {
 
                 let screenShotOptions = {
                     encoding: 'binary',
