@@ -49,6 +49,14 @@ paths:
         200:
           description: Prometheus metrics
 
+  /health:
+    get:
+      tags:
+        - Health
+      responses:
+        200:
+          description: Service health indicator
+
   /:
     post:
       tags:
