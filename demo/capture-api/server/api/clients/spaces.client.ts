@@ -62,4 +62,37 @@ export class SpacesClient {
         return fileName;
     }
 
+    async getHealth(): Promise<String> {
+
+        let s3: AWS.S3 = this.getS3Client();
+
+        let status: String = "UNKNOWN";
+        await s3.listBuckets().promise().then(value => {
+
+            logger.debug(`bucket_list=${value.Buckets}`);
+            status = "UP";
+
+        }).catch(err => {
+
+            logger.error(`can't get bucket list error=${err}`);
+
+            status = "DOWN";
+        });
+
+        return status;
+    }
+
+    private getS3Client(): AWS.S3 {
+
+        let spacesEndpoint = new AWS.Endpoint(this.spacesConfig.spacesEndpoint);
+
+        let s3 = new AWS.S3({
+          endpoint: spacesEndpoint.href,
+          accessKeyId: this.spacesConfig.clientId,
+          secretAccessKey: this.spacesConfig.secret
+        }); 
+        
+        return s3;
+    }
+
 }
