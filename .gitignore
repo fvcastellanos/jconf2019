@@ -3,3 +3,5 @@
 # Container specific
 **/.env
 docker/**/data/*
+jmeter.log
+
