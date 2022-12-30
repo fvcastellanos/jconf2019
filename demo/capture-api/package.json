@@ -29,7 +29,7 @@
     "@types/mocha": "^5.2.7",
     "@types/pino": "^5.8.10",
     "chai": "^4.2.0",
-    "mocha": "^6.2.1",
+    "mocha": "^10.2.0",
     "nodemon": "^1.19.3",
     "pino-pretty": "^3.2.1",
     "shelljs": "^0.8.3",
